@@ -1,0 +1,8 @@
+.wheel path, .wheel text {
+    transition: opacity 1s;
+    opacity: 0.3
+}
+
+.primaryGroup:hover path, .primaryGroup:hover text{
+    opacity: 1;
+}
