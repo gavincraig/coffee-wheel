@@ -1,0 +1,12 @@
+.root {
+    cursor: pointer;
+}
+
+.root:hover {
+    opacity: .7;
+    transition: .5s;
+}
+
+.root[data-isSelected="true"] {
+    opacity: 1 !important;
+}

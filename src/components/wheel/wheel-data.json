@@ -1,0 +1,257 @@
+[
+  {
+    "id": "fruity",
+    "displayName": "Fruity",
+    "color": "#da1d23",
+    "children": [
+      {
+        "id": "berry",
+        "displayName": "Berry",
+        "color": "#dd4c51",
+        "children": [
+          {
+            "id": "blackberry",
+            "displayName": "Blackberry",
+            "color": "#3e0317"
+          },
+          {
+            "id": "raspberry",
+            "displayName": "Raspberry",
+            "color": "#e52968"
+          },
+          {
+            "id": "blueberry",
+            "displayName": "Blueberry",
+            "color": "#6469b0"
+          },
+          {
+            "id": "strawberry",
+            "displayName": "Strawberry",
+            "color": "#ef2d36"
+          }
+        ]
+      },
+      {
+        "id": "dried-fruit",
+        "displayName": "Dried fruit",
+        "color": "#c94a44",
+        "children": [
+          {
+            "id": "raisin",
+            "displayName": "Raisin",
+            "color": "#b53b54"
+          },
+          {
+            "id": "prune",
+            "displayName": "Prune",
+            "color": "#a5446f"
+          }
+        ]
+      },
+      {
+        "id": "other-fruit",
+        "displayName": "Other fruit",
+        "color": "#f2684c",
+        "children": [
+          {
+            "id": "coconut",
+            "displayName": "Coconut",
+            "color": "#d07c36"
+          },
+          {
+            "id": "cherry",
+            "displayName": "Cherry",
+            "color": "#e73451"
+          },
+          {
+            "id": "pomegranate",
+            "displayName": "Pomegranate",
+            "color": "#e65656"
+          },
+          {
+            "id": "pineapple",
+            "displayName": "Pineapple",
+            "color": "#f89a1c"
+          },
+          {
+            "id": "grape",
+            "displayName": "Grape",
+            "color": "#aeb92c"
+          },
+          {
+            "id": "apple",
+            "displayName": "Apple",
+            "color": "#4eb947"
+          },
+          {
+            "id": "peach",
+            "displayName": "Peach",
+            "color": "#f68a5c"
+          },
+          {
+            "id": "pear",
+            "displayName": "Pear",
+            "color": "#baa635"
+          }
+        ]
+      },
+      {
+        "id": "citrus-fruit",
+        "displayName": "Citrus fruit",
+        "color": "#f7a129",
+        "children": [
+          {
+            "id": "grapefruit",
+            "displayName": "Grapefruit",
+            "color": "#f26355"
+          },
+          {
+            "id": "orange",
+            "displayName": "Orange",
+            "color": "#e2631e"
+          },
+          {
+            "id": "lemon",
+            "displayName": "Lemon",
+            "color": "#fde402"
+          },
+          {
+            "id": "lime",
+            "displayName": "Lime",
+            "color": "#7eb138"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sour-fermented",
+    "displayName": "Sour/Fermented",
+    "color": "#ebb40d",
+    "children": [
+      {
+        "id": "sour",
+        "displayName": "Sour",
+        "color": "#e1c315",
+        "children": [
+          {
+            "id": "sour-aromatics",
+            "displayName": "Sour Aromatics",
+            "color": "#9ea718"
+          },
+          {
+            "id": "acetic-acid",
+            "displayName": "Acetic Acid",
+            "color": "#94a770"
+          },
+          {
+            "id": "butyric-acid",
+            "displayName": "Butyric Acid",
+            "color": "#d0b34f"
+          },
+          {
+            "id": "isovaleric-acid",
+            "displayName": "Isovaleric Acid",
+            "color": "#8eb646"
+          },
+          {
+            "id": "citric-acid",
+            "displayName": "Citric Acid",
+            "color": "#faef08"
+          },
+          {
+            "id": "malic-acid",
+            "displayName": "Malic Acid",
+            "color": "#c1ba09"
+          }
+        ]
+      },
+      {
+        "id": "alcohol",
+        "displayName": "Alcohol/Fermented",
+        "color": "#b09733",
+        "children": [
+          {
+            "id": "winey",
+            "displayName": "Winey",
+            "color": "#8f1b53"
+          },
+          {
+            "id": "whiskey",
+            "displayName": "Whiskey",
+            "color": "#b34039"
+          },
+          {
+            "id": "fermented",
+            "displayName": "Fermented",
+            "color": "#ba9232"
+          },
+          {
+            "id": "overripe",
+            "displayName": "Overripe",
+            "color": "#8b6439"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "green",
+    "displayName": "Green/Vegetative",
+    "color": "#197a2f",
+    "children": [
+      {
+        "id": "olive-oil",
+        "displayName": "Olive oil",
+        "color": "#a2b028"
+      },
+      {
+        "id": "raw",
+        "displayName": "Raw",
+        "color": "#708933"
+      },
+      {
+        "id": "green-veg",
+        "displayName": "Green/Vegetative",
+        "color": "#3aa255",
+        "children": [
+          {
+            "id": "under-ripe",
+            "displayName": "Under-ripe",
+            "color": "#a2bc2b"
+          },
+          {
+            "id": "peapod",
+            "displayName": "peapod",
+            "color": "#62aa3c"
+          },
+          {
+            "id": "fresh",
+            "displayName": "fresh",
+            "color": "#03a653"
+          },
+          {
+            "id": "dark-green",
+            "displayName": "Dark green",
+            "color": "#048549"
+          },
+          {
+            "id": "vegetative",
+            "displayName": "Vegetative",
+            "color": "#27b44b"
+          },
+          {
+            "id": "hay-like",
+            "displayName": " Hay-like",
+            "color": "#a3a830"
+          },
+          {
+            "id": "herb-like",
+            "displayName": "Herb-like",
+            "color": "#7ac141"
+          }
+        ]
+      }
+    ]
+  }
+]
