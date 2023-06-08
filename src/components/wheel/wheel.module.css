@@ -1,8 +1,45 @@
-.wheel path, .wheel text {
+/* .wheel path, .wheel text {
     transition: opacity 1s;
     opacity: 0.3
+} */
+
+.wheel {
+    max-width: 800px;
 }
 
-.primaryGroup:hover path, .primaryGroup:hover text{
-    opacity: 1;
+/* .primaryGroup:hover path, .primaryGroup:hover text{
+    opacity: .8;
+} */
+
+.breadcrumb {
+    display: flex;
+    gap: 20px;
+    list-style: none;
 }
+
+.breadcrumb > li {
+    padding: 10px 15px;
+    position: relative;
+    align-items: center;
+    display: flex;
+    background-color: inherit;
+}
+
+.breadcrumb > li:after {
+    content: '';
+    background-color: inherit;
+    opacity: 0.8;
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    right: -10px;
+
+}
+
+/* .wheel path:hover path, .wheel text:hover path {
+    opacity: 1;
+} */
+
+/* .wheel .primaryGroup:hover > g > path {
+    opacity: 1;
+} */
