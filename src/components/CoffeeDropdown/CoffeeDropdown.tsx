@@ -12,19 +12,19 @@ import { Coffee } from '../../types';
 
 
 type Props = {
-    selectedCoffee: Coffee | never
+    selectedCoffee: Coffee | never;
+    handleSelectCoffee: ()=> void;
+    handleAddNewCoffee: () => void;
 }
 
-const CoffeeDropdown = ({ selectedCoffee, handleSelectCoffee }) => {
+const CoffeeDropdown = ({ selectedCoffee, handleSelectCoffee, handleAddNewCoffee }) => {
   return (
     <DropdownMenu.Root>
         <DropdownMenu.Trigger className='flex items-center gap-2'>
-            {
-                selectedCoffee ? <span>{selectedCoffee.name}</span> : <span>select</span>
-            }
+            {selectedCoffee?.name || 'select'}
             <ChevronDownIcon />
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className='bg-slate-800 p-4'>
+        <DropdownMenu.Content className='bg-slate-800 p-4 shadow-xl'>
             {
                 MOCK_COFFEE.map(coffee => {
                     return (
@@ -34,7 +34,7 @@ const CoffeeDropdown = ({ selectedCoffee, handleSelectCoffee }) => {
                     )
                 })
             }
-            <button>add new</button>
+            <button onClick={handleAddNewCoffee}>add new</button>
         </DropdownMenu.Content>
     </DropdownMenu.Root>
   )
