@@ -836,6 +836,8 @@ const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelectio
             </WheelSector>
             <WheelSector
               id="under-ripe"
+              onClick={handlePathClick}
+              breadcrumbIds={breadcrumbIds}
               fill="#a2bc2b"
               d="M647.48 562.63q-6.08 9.06-12.77 17.68l-16.61-12.92q6.24-8 11.9-16.48Z"
               transform="translate(-23.83 -19.37)"
