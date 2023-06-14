@@ -4,10 +4,7 @@ import wheelData from "./wheel-data.json";
 import { WheelSector } from "../WheelSector";
 import { SelectionsContext } from "../../context/SelectionsContext";
 
-const Wheel = () => {
-  const [flavourBreadcrumb, setFlavourBreadcrumb] = useState([]);
-  const [selections, setSelections] = useState([]);
-
+const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelections}) => {
   const breadcrumbIds = flavourBreadcrumb?.map((breadcrumb) => breadcrumb.id);
 
   const computeSelectionBreadcrumb = (id) => {
@@ -84,11 +81,11 @@ const Wheel = () => {
     <>
       <button onClick={() => console.log(selections)}>log select</button>
       <FullBreadcrumb />
-      <ol className={styles.breadcrumb}>
+      {/* <ol className={styles.breadcrumb}>
         {flavourBreadcrumb?.map((flavour) => (
           <BreadcrumbSection flavour={flavour} />
         ))}
-      </ol>
+      </ol> */}
       <SelectionsContext.Provider value={{ selections }}>
         <svg
           className={styles.wheel}
