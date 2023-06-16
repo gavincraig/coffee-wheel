@@ -2,12 +2,13 @@ import React from 'react'
 import { TastingHistoryEntry } from '../../types'
 
 type Props = {
-  history: TastingHistoryEntry[] | never
+  history: TastingHistoryEntry[] | never;
+  setSelections: (selections:selections[]) => void;
 };
 
-const HistoryEntry = ({historyEntry}) => {
+const HistoryEntry = ({historyEntry, setSelections}) => {
   return (
-    <div className='flex flex-col p-2 bg-slate-700'>
+    <div className='flex flex-col p-2 bg-slate-700 shadow-md hover:shadow-lg hover:bg-slate-600 cursor-pointer' onClick={() => setSelections(historyEntry.details.flavors)}>
       <span className='text-xs font-light'>
         {historyEntry.details.date.toLocaleDateString('en-GB') }
         </span>
@@ -19,13 +20,13 @@ const HistoryEntry = ({historyEntry}) => {
   )
 }
 
-const TastingHistory = ({ history }: Props) => {
+const TastingHistory = ({ history, setSelections }: Props) => {
   return (
     <div className='flex flex-col'>
         TastingHistory
         <ol className='flex flex-col gap-2'>
         {
-          history?.map(entry => <li><HistoryEntry historyEntry={entry} /></li>)
+          history?.map(entry => <li><HistoryEntry historyEntry={entry} setSelections={setSelections}/></li>)
         }
         </ol>
         

@@ -72,9 +72,11 @@ const handleSave = () => {
   const newCoffee = {name: coffeeNameInputValue, origin: originInputValue, process: processInputValue, varietal: varietalInputValue}
 
   isNewCoffee && handleAddCoffeeToCoffeeList(newCoffee);
+  
+  const coffeeForEntry = isNewCoffee ? newCoffee : selectedCoffee
 
   const newEntry = {
-    coffee: newCoffee,
+    coffee: coffeeForEntry,
     details: {
       comments: commentsInputValue,
       date: new Date(),
@@ -93,6 +95,7 @@ const handleSave = () => {
 }
 
 const historyForSelectedCoffee = tastingHistory.filter((entry) => entry.coffee.name === selectedCoffee?.name);
+console.log('history : ', historyForSelectedCoffee, tastingHistory, selectedCoffee)
 
   return (
     <div className="App w-screen p-12">
@@ -108,7 +111,7 @@ const historyForSelectedCoffee = tastingHistory.filter((entry) => entry.coffee.n
             setOriginInputValue={setOriginInputValue} varietalInputValue={varietalInputValue} setVarietalInputValue={setVarietalInputValue} setProcessInputValue={setProcessInputValue} 
             />
           <TastingNotes commentsInputValue={commentsInputValue} setCommentsInputValue={setCommentsInputValue} />
-          <TastingHistory history={historyForSelectedCoffee} />
+          <TastingHistory history={historyForSelectedCoffee} setSelections={setSelections} />
           <button onClick={handleCancel}>Cancel</button>
           <button onClick={handleSave}>Save</button>
         </section>
