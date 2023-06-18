@@ -3,7 +3,7 @@ import { TastingHistoryEntry } from '../../types'
 
 type Props = {
   history: TastingHistoryEntry[] | never;
-  setSelections: (selections:selections[]) => void;
+  setSelections: (selections:string[]) => void;
 };
 
 const HistoryEntry = ({historyEntry, setSelections}) => {
@@ -28,9 +28,8 @@ const TastingHistory = ({ history, setSelections }: Props) => {
         {
           history?.map(entry => <li><HistoryEntry historyEntry={entry} setSelections={setSelections}/></li>)
         }
-        </ol>
-        
-        </div>
+        </ol>   
+    </div>
   )
 }
 

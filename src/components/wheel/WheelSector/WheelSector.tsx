@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SelectionsContext } from "../../context/SelectionsContext";
+import { SelectionsContext } from "../../../context/SelectionsContext";
 import styles from './WheelSector.module.css';
 
 const WheelSector = ({ onClick, id, breadcrumbIds, children, ...props }) => {

@@ -4,10 +4,14 @@ import { Coffee } from "../../types";
 type CoffeeDetailsProps = {
   coffee?: Coffee;
   isNewCoffee?: boolean;
+  coffeeNameInputValue?: string | never;
+  setCoffeeNameInputValue: React.Dispatch<React.SetStateAction<string>>;
   originInputValue?: string | never;
+  setOriginInputValue: React.Dispatch<React.SetStateAction<string>>;
   processInputValue?: string | never;
+  setProcessInputValue: React.Dispatch<React.SetStateAction<string>>;
   varietalInputValue?: string | never;
-  handleInputChange: () => void;
+  setVarietalInputValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const CoffeeDetails = ({
@@ -18,27 +22,26 @@ const CoffeeDetails = ({
   processInputValue,
   setProcessInputValue,
   varietalInputValue,
-  setVarietalInputValue,
-  handleInputChange
+  setVarietalInputValue
 }: CoffeeDetailsProps) => {
   return (
     <div className="flex flex-col gap-2 p-4">
       <input
         value={coffee?.origin || originInputValue}
         placeholder="origin"
-        onChange={(e) => handleInputChange(setOriginInputValue(e.target.value))}
+        onChange={(e) => (setOriginInputValue(e.target.value))}
         disabled={!isNewCoffee}
       />
       <input
         value={coffee?.process || processInputValue}
         placeholder="process"
-        onChange={(e) => handleInputChange(setProcessInputValue(e.target.value))}
+        onChange={(e) => setProcessInputValue(e.target.value)}
         disabled={!isNewCoffee}
       />
       <input
         value={coffee?.varietal || varietalInputValue}
         placeholder="varietal"
-        onChange={(e) => handleInputChange(setVarietalInputValue(e.target.value))}
+        onChange={(e) => (setVarietalInputValue(e.target.value))}
         disabled={!isNewCoffee}
       />
     </div>
