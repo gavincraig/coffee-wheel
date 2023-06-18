@@ -1,45 +1,24 @@
 import React, { useState } from "react";
 import styles from "./wheel.module.css";
 import wheelData from "./wheel-data.json";
-import { WheelSector } from "../WheelSector";
+import { WheelSector } from "./WheelSector";
 import { SelectionsContext } from "../../context/SelectionsContext";
+import { computeSelectionBreadcrumb } from "./utils";
+import { FlavourBreadcrumbEntry } from "../../types";
 
-const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelections}) => {
+type WheelProps = {
+  flavourBreadcrumb: FlavourBreadcrumbEntry[];
+  setFlavourBreadcrumb: React.Dispatch<React.SetStateAction<any>>;
+  selections: string[];
+  setSelections: React.Dispatch<React.SetStateAction<any>>
+}
+
+const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelections} : WheelProps) => {
   const breadcrumbIds = flavourBreadcrumb?.map((breadcrumb) => breadcrumb.id);
 
-  const computeSelectionBreadcrumb = (id) => {
-    const breadcrumb = [];
-
-    const checkItemsForIdRecursive = (items, id) => {
-      let idx = 0;
-      let foundElement;
-
-      while (idx < items.length) {
-        const currentItem = items[idx];
-        breadcrumb.push(currentItem);
-        if (currentItem.id === id) {
-          return { breadcrumb, currentItem };
-        }
-        if (currentItem.children?.length > 0) {
-          const recursiveResult = checkItemsForIdRecursive(
-            currentItem.children,
-            id,
-            breadcrumb
-          );
-          if (recursiveResult) {
-            return recursiveResult;
-          }
-        }
-        breadcrumb.pop();
-        idx += 1;
-      }
-      return false;
-    };
-    return checkItemsForIdRecursive(wheelData, id, breadcrumb);
-  };
-
-  const handlePathClick = (id) => {
+  const handlePathClick = (id: string) => {
     const { breadcrumb, currentItem } = computeSelectionBreadcrumb(id);
+    console.log(breadcrumb, currentItem);
     if (selections.includes(currentItem.id)) {
       console.log("aready selected");
       setSelections((selections) =>
