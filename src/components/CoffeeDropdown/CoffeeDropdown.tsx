@@ -36,7 +36,7 @@ const CoffeeDropdown = ({ options, selectedCoffee, handleSelectCoffee, handleAdd
                 })
                 : <span>No coffees</span>
             }
-            <button onClick={handleAddNewCoffee}>add new</button>
+            <button onClick={handleAddNewCoffee}>New Coffee</button>
         </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

@@ -7,6 +7,7 @@ import { CoffeeDetails } from './components/CoffeeDetails';
 import { TastingNotes } from './components/TastingNotes';
 import { TastingHistory } from './components/TastingHistory';
 import { MOCK_COFFEE } from './constants'
+import FullBreadcrumb from './components/FlavourBreadcrumb/FlavourBreadcrumb';
 
 function App() {
 
@@ -23,10 +24,6 @@ function App() {
 
   const [coffeeOptions, setCoffeeOptions] = useState<Coffee[] | []>(MOCK_COFFEE);
   const [tastingHistory, setTastingHistory] = useState<TastingHistoryEntry[]>([]);
-
-  const handleInputChange = (updateStateFunction: (value: any) => void, value: string) => {
-    updateStateFunction(value);
-  }
 
 const handleSelectCoffee = (coffee: Coffee) => setSelectedCoffee(coffee); 
 
@@ -45,10 +42,9 @@ const handleClearInputs = () => {
 
 const handleCancel = () => {
   setIsNewCoffee(false);
+  handleResetSelections();
   handleResetSelectedCoffee();
-  
   handleClearInputs();
-  
 }
 
 const handleResetSelectedCoffee = () => {
@@ -60,20 +56,15 @@ const handleResetSelections = () => {
   setFlavourBreadcrumb([]);
 }
 
-const handleAddCoffeeToCoffeeList = (newCoffee: Coffee) => {
-  
-  setCoffeeOptions([newCoffee, ...coffeeOptions])
-}
+const handleAddCoffeeToCoffeeList = (newCoffee: Coffee) => setCoffeeOptions([newCoffee, ...coffeeOptions])
 
 const handleSave = () => {
   const newCoffee = {name: coffeeNameInputValue, origin: originInputValue, process: processInputValue, varietal: varietalInputValue}
 
   isNewCoffee && handleAddCoffeeToCoffeeList(newCoffee);
-  
-  const coffeeForEntry = isNewCoffee ? newCoffee : selectedCoffee
 
   const newEntry = {
-    coffee: coffeeForEntry,
+    coffee: isNewCoffee ? newCoffee : selectedCoffee,
     details: {
       comments: commentsInputValue,
       date: new Date(),
@@ -81,18 +72,12 @@ const handleSave = () => {
     }
   }
 
-  setTastingHistory((tastingHistory) => [newEntry, ...tastingHistory])
-
-  handleClearInputs();
-  handleResetSelectedCoffee();
-  handleResetSelections();
-  setIsNewCoffee(false);
-
+  setTastingHistory((tastingHistory) => [newEntry, ...tastingHistory]);
   window.alert(`${selectedCoffee?.name || coffeeNameInputValue} saved with ${selections} & notes : ${commentsInputValue}`)
+  handleCancel();
 }
 
 const historyForSelectedCoffee = tastingHistory?.filter((entry) => entry.coffee.name === selectedCoffee?.name);
-console.log('history : ', historyForSelectedCoffee, tastingHistory, selectedCoffee)
 
   return (
     <div className="App w-screen p-12">
@@ -113,6 +98,7 @@ console.log('history : ', historyForSelectedCoffee, tastingHistory, selectedCoff
           <TastingHistory history={historyForSelectedCoffee} setSelections={setSelections} />
           <button onClick={handleCancel}>Cancel</button>
           <button onClick={handleSave}>Save</button>
+          <FullBreadcrumb selections={selections} />
         </section>
         <section className="flex-1">
           <Wheel flavourBreadcrumb={flavourBreadcrumb} setFlavourBreadcrumb={setFlavourBreadcrumb}
