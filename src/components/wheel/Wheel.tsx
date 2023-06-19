@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import styles from "./wheel.module.css";
-import wheelData from "./wheel-data.json";
-import { WheelSector } from "./WheelSector";
+import React from "react";
 import { SelectionsContext } from "../../context/SelectionsContext";
-import { computeSelectionBreadcrumb } from "./utils";
 import { FlavourBreadcrumbEntry } from "../../types";
+import { WheelSector } from "./WheelSector";
+import { computeSelectionBreadcrumb } from "./utils";
+import styles from "./wheel.module.css";
 
 type WheelProps = {
   flavourBreadcrumb: FlavourBreadcrumbEntry[];
@@ -16,55 +15,25 @@ type WheelProps = {
 const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelections} : WheelProps) => {
   const breadcrumbIds = flavourBreadcrumb?.map((breadcrumb) => breadcrumb.id);
 
-  const handlePathClick = (id: string) => {
-    const { breadcrumb, currentItem } = computeSelectionBreadcrumb(id);
-    console.log(breadcrumb, currentItem);
-    if (selections.includes(currentItem.id)) {
-      console.log("aready selected");
-      setSelections((selections) =>
-        selections.filter((flavour) => flavour !== currentItem.id)
+  const handleDeselect = (flavourId: string) => {
+    setSelections((selections) =>
+        selections.filter((flavour) => flavour !== flavourId)
       );
+  }
+
+  const handlePathClick = (id: string) => {
+    if (selections.includes(id)) {
+      handleDeselect(id)
     } else {
-      setSelections((selections) => [currentItem.id, ...selections]);
+      setSelections((selections) => [id, ...selections]);
     }
+    const { breadcrumb } = computeSelectionBreadcrumb(id);
     setFlavourBreadcrumb(breadcrumb);
   };
-
-  const BreadcrumbSection = ({ flavour }) => {
-    return (
-      <li style={{ backgroundColor: flavour.color }}>{flavour.displayName}</li>
-    );
-  };
-
-  const FullBreadcrumbSection = ({ flavour }) => {
-    return (
-      <li style={{ backgroundColor: flavour.color, width: 'fit-content' }}>{flavour.displayName}</li>
-    );
-  };
-
-  const FullBreadcrumb = () => {
-    return(
-      <ol>
-        {
-          selections.map(selection => {
-            const flavourBreadcrumb = computeSelectionBreadcrumb(selection);
-            console.log(flavourBreadcrumb);
-            return <FullBreadcrumbSection flavour={flavourBreadcrumb.breadcrumb.slice(-1)[0]}/>
-          })
-        }
-      </ol>
-    )
-  }
 
   return (
     <>
       <button onClick={() => console.log(selections)}>log select</button>
-      <FullBreadcrumb />
-      {/* <ol className={styles.breadcrumb}>
-        {flavourBreadcrumb?.map((flavour) => (
-          <BreadcrumbSection flavour={flavour} />
-        ))}
-      </ol> */}
       <SelectionsContext.Provider value={{ selections }}>
         <svg
           className={styles.wheel}
