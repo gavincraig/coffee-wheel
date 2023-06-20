@@ -8,6 +8,8 @@ import { TastingNotes } from './components/TastingNotes';
 import { TastingHistory } from './components/TastingHistory';
 import { MOCK_COFFEE } from './constants'
 import FullBreadcrumb from './components/FlavourBreadcrumb/FlavourBreadcrumb';
+import { Modal } from './components/primatives/Modal';
+import { NewCoffeeModal } from './components/NewCoffeeModal';
 
 function App() {
 
@@ -56,6 +58,18 @@ const handleResetSelections = () => {
   setFlavourBreadcrumb([]);
 }
 
+const handleSaveNewCoffee = () => {
+  const newCoffee: Coffee = {
+    name: coffeeNameInputValue,
+    origin: originInputValue,
+    process: processInputValue,
+    varietal: varietalInputValue
+  }
+
+  handleAddCoffeeToCoffeeList(newCoffee);
+  handleSelectCoffee(newCoffee);
+}
+
 const handleAddCoffeeToCoffeeList = (newCoffee: Coffee) => setCoffeeOptions([newCoffee, ...coffeeOptions])
 
 const handleSave = () => {
@@ -80,7 +94,13 @@ const handleSave = () => {
 const historyForSelectedCoffee = tastingHistory?.filter((entry) => entry.coffee.name === selectedCoffee?.name);
 
   return (
-    <div className="App w-screen p-12">
+    <div className="App w-screen">
+      <NewCoffeeModal 
+      values={{coffeeNameInputValue, originInputValue, processInputValue, varietalInputValue}}
+      callbacks={{setCoffeeNameInputValue, setOriginInputValue, setProcessInputValue, setVarietalInputValue}}
+      handleSaveNewCoffee={handleSaveNewCoffee}
+      />
+      <div className='p-12'>
       <h1>Coffee Wheel</h1>
       <div className="flex w-full">
         <section className="flex-1">
@@ -89,21 +109,18 @@ const historyForSelectedCoffee = tastingHistory?.filter((entry) => entry.coffee.
             ? <input placeholder={'my new coffee'} value={coffeeNameInputValue} onChange={(e) => setCoffeeNameInputValue(e.target.value)}/> 
             : <CoffeeDropdown options={coffeeOptions} selectedCoffee={selectedCoffee} handleSelectCoffee={handleSelectCoffee} handleAddNewCoffee={handleAddNewCoffee} />
           }
-          <CoffeeDetails coffee={selectedCoffee} isNewCoffee={isNewCoffee}
-           coffeeNameInputValue={coffeeNameInputValue} originInputValue={originInputValue}
-            processInputValue={processInputValue} setCoffeeNameInputValue={setCoffeeNameInputValue} 
-            setOriginInputValue={setOriginInputValue} varietalInputValue={varietalInputValue} setVarietalInputValue={setVarietalInputValue} setProcessInputValue={setProcessInputValue} 
-            />
+          <FullBreadcrumb selections={selections} />
           <TastingNotes commentsInputValue={commentsInputValue} setCommentsInputValue={setCommentsInputValue} />
           <TastingHistory history={historyForSelectedCoffee} setSelections={setSelections} />
           <button onClick={handleCancel}>Cancel</button>
           <button onClick={handleSave}>Save</button>
-          <FullBreadcrumb selections={selections} />
+          
         </section>
         <section className="flex-1">
           <Wheel flavourBreadcrumb={flavourBreadcrumb} setFlavourBreadcrumb={setFlavourBreadcrumb}
           selections={selections} setSelections={setSelections} />
         </section>
+      </div>
       </div>
     </div>
   );
