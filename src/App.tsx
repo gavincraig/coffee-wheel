@@ -1,129 +1,148 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./App.css";
 import { CoffeeDropdown } from "./components/CoffeeDropdown";
 import { Wheel } from "./components/Wheel";
-import { Coffee, TastingHistoryEntry, FlavourBreadcrumbEntry } from './types';
-import { CoffeeDetails } from './components/CoffeeDetails';
-import { TastingNotes } from './components/TastingNotes';
-import { TastingHistory } from './components/TastingHistory';
-import { MOCK_COFFEE } from './constants'
-import FullBreadcrumb from './components/FlavourBreadcrumb/FlavourBreadcrumb';
-import { Modal } from './components/primatives/Modal';
-import { NewCoffeeModal } from './components/NewCoffeeModal';
+import { Coffee, TastingHistoryEntry, FlavourBreadcrumbEntry } from "./types";
+import { CoffeeDetails } from "./components/CoffeeDetails";
+import { TastingNotes } from "./components/TastingNotes";
+import { TastingHistory } from "./components/TastingHistory";
+import { MOCK_COFFEE } from "./constants";
+import FullBreadcrumb from "./components/FlavourBreadcrumb/FlavourBreadcrumb";
+import { Modal } from "./components/primatives/Modal";
+import { NewCoffeeModal } from "./components/NewCoffeeModal";
+import { HistoryContext } from "./context/HistoryContext";
 
-function App() {
-
+export default function App() {
   const [selectedCoffee, setSelectedCoffee] = useState<Coffee | never>();
   const [isNewCoffee, setIsNewCoffee] = useState(false);
-  const [flavourBreadcrumb, setFlavourBreadcrumb] = useState<FlavourBreadcrumbEntry[] | []>([]);
+  const [flavourBreadcrumb, setFlavourBreadcrumb] = useState<
+    FlavourBreadcrumbEntry[] | []
+  >([]);
   const [selections, setSelections] = useState<string[] | []>([]);
 
-  const [coffeeNameInputValue, setCoffeeNameInputValue] = useState('');
-  const [originInputValue, setOriginInputValue] = useState('');
-  const [processInputValue, setProcessInputValue] = useState('');
-  const [varietalInputValue, setVarietalInputValue] = useState('');
-  const [commentsInputValue, setCommentsInputValue] = useState('');
+  const [commentsInputValue, setCommentsInputValue] = useState("");
 
-  const [coffeeOptions, setCoffeeOptions] = useState<Coffee[] | []>(MOCK_COFFEE);
-  const [tastingHistory, setTastingHistory] = useState<TastingHistoryEntry[]>([]);
+  const [coffeeOptions, setCoffeeOptions] = useState<Coffee[] | []>(
+    MOCK_COFFEE
+  );
+  const [tastingHistory, setTastingHistory] = useState<TastingHistoryEntry[]>(
+    []
+  );
 
-const handleSelectCoffee = (coffee: Coffee) => setSelectedCoffee(coffee); 
+  const [showNewCoffeeModal, setShowNewCoffeeModal] = useState(false);
+  const [showCoffeeDropdown, setShowCoffeeDropdown] = useState(false);
 
-const handleAddNewCoffee = () => {
-  setIsNewCoffee(true)
-  setSelectedCoffee({name: '', origin: '', process: '', varietal: ''})
-}
+  const toggleNewCoffeeModal = () => {
+    console.log("called");
+    setShowNewCoffeeModal((showNewCoffeeModal) => !showNewCoffeeModal);
+  };
 
-const handleClearInputs = () => {
-  setCoffeeNameInputValue('');
-  setOriginInputValue('');
-  setProcessInputValue('');
-  setVarietalInputValue('');
-  setCommentsInputValue('');
-}
+  const toggleCoffeeDropdown = () =>
+    setShowCoffeeDropdown((showCoffeeDropdown) => !showCoffeeDropdown);
 
-const handleCancel = () => {
-  setIsNewCoffee(false);
-  handleResetSelections();
-  handleResetSelectedCoffee();
-  handleClearInputs();
-}
+  const handleSelectCoffee = (coffee: Coffee) => setSelectedCoffee(coffee);
 
-const handleResetSelectedCoffee = () => {
-  setSelectedCoffee({name: '', origin: '', process: '', varietal: ''})
-}
+  const handleAddNewCoffee = () => {
+    setIsNewCoffee(true);
+    setSelectedCoffee({ name: "", origin: "", process: "", varietal: "" });
+  };
 
-const handleResetSelections = () => {
-  setSelections([]);
-  setFlavourBreadcrumb([]);
-}
+  const handleCancel = () => {
+    setIsNewCoffee(false);
+    handleResetSelections();
+    handleResetSelectedCoffee();
+  };
 
-const handleSaveNewCoffee = () => {
-  const newCoffee: Coffee = {
-    name: coffeeNameInputValue,
-    origin: originInputValue,
-    process: processInputValue,
-    varietal: varietalInputValue
-  }
+  const handleResetSelectedCoffee = () => {
+    setSelectedCoffee({ name: "", origin: "", process: "", varietal: "" });
+  };
 
-  handleAddCoffeeToCoffeeList(newCoffee);
-  handleSelectCoffee(newCoffee);
-}
+  const handleResetSelections = () => {
+    setSelections([]);
+    setFlavourBreadcrumb([]);
+  };
 
-const handleAddCoffeeToCoffeeList = (newCoffee: Coffee) => setCoffeeOptions([newCoffee, ...coffeeOptions])
+  const handleSaveNewCoffee = (newCoffee: Coffee) => {
+    handleAddCoffeeToCoffeeList(newCoffee);
+    handleSelectCoffee(newCoffee);
+  };
 
-const handleSave = () => {
-  const newCoffee = {name: coffeeNameInputValue, origin: originInputValue, process: processInputValue, varietal: varietalInputValue}
+  const handleAddCoffeeToCoffeeList = (newCoffee: Coffee) =>
+    setCoffeeOptions([newCoffee, ...coffeeOptions]);
 
-  isNewCoffee && handleAddCoffeeToCoffeeList(newCoffee);
+  const handleSave = () => {
+    const newEntry = {
+      coffee: selectedCoffee,
+      details: {
+        comments: commentsInputValue,
+        date: new Date(),
+        flavors: selections,
+      },
+    };
 
-  const newEntry = {
-    coffee: isNewCoffee ? newCoffee : selectedCoffee,
-    details: {
-      comments: commentsInputValue,
-      date: new Date(),
-      flavors: selections
-    }
-  }
+    setTastingHistory((tastingHistory) => [newEntry, ...tastingHistory]);
+    window.alert(
+      `${selectedCoffee?.name} saved with ${selections} & notes : ${commentsInputValue}`
+    );
+    handleCancel();
+  };
 
-  setTastingHistory((tastingHistory) => [newEntry, ...tastingHistory]);
-  window.alert(`${selectedCoffee?.name || coffeeNameInputValue} saved with ${selections} & notes : ${commentsInputValue}`)
-  handleCancel();
-}
-
-const historyForSelectedCoffee = tastingHistory?.filter((entry) => entry.coffee.name === selectedCoffee?.name);
+  const historyForSelectedCoffee = tastingHistory?.filter(
+    (entry) => entry.coffee.name === selectedCoffee?.name
+  );
 
   return (
-    <div className="App w-screen">
-      <NewCoffeeModal 
-      values={{coffeeNameInputValue, originInputValue, processInputValue, varietalInputValue}}
-      callbacks={{setCoffeeNameInputValue, setOriginInputValue, setProcessInputValue, setVarietalInputValue}}
-      handleSaveNewCoffee={handleSaveNewCoffee}
+    <div className="App w-screen max-h-screen flex flex-col">
+      <NewCoffeeModal
+        handleSaveNewCoffee={handleSaveNewCoffee}
+        open={showNewCoffeeModal}
+        toggleModal={toggleNewCoffeeModal}
       />
-      <div className='p-12'>
-      <h1>Coffee Wheel</h1>
-      <div className="flex w-full">
-        <section className="flex-1">
-          {
-            isNewCoffee 
-            ? <input placeholder={'my new coffee'} value={coffeeNameInputValue} onChange={(e) => setCoffeeNameInputValue(e.target.value)}/> 
-            : <CoffeeDropdown options={coffeeOptions} selectedCoffee={selectedCoffee} handleSelectCoffee={handleSelectCoffee} handleAddNewCoffee={handleAddNewCoffee} />
-          }
-          <FullBreadcrumb selections={selections} />
-          <TastingNotes commentsInputValue={commentsInputValue} setCommentsInputValue={setCommentsInputValue} />
-          <TastingHistory history={historyForSelectedCoffee} setSelections={setSelections} />
-          <button onClick={handleCancel}>Cancel</button>
+      <div className="p-2 sm:p-12">
+        <h1 className="text-md sm:text-lg">Coffee Wheel</h1>
+        <div className="flex justify-between p-2 sm:justify-start">
+          <CoffeeDropdown
+            open={showCoffeeDropdown}
+            toggleDropdown={toggleCoffeeDropdown}
+            options={coffeeOptions}
+            selectedCoffee={selectedCoffee}
+            handleSelectCoffee={handleSelectCoffee}
+            handleAddNewCoffee={handleAddNewCoffee}
+            handleSaveNewCoffee={handleSaveNewCoffee}
+            toggleNewCoffeeModal={toggleNewCoffeeModal}
+            toggleCoffeeDropdown={toggleCoffeeDropdown}
+          />
+          <div className="flex gap-4 px-2">
+          <button onClick={handleCancel}>Reset</button>
           <button onClick={handleSave}>Save</button>
-          
-        </section>
-        <section className="flex-1">
-          <Wheel flavourBreadcrumb={flavourBreadcrumb} setFlavourBreadcrumb={setFlavourBreadcrumb}
-          selections={selections} setSelections={setSelections} />
-        </section>
-      </div>
+          </div>
+        </div>
+        <div className="flex w-full flex-col sm:flex-row">
+          <section className="flex-1 mt-4 sm:max-w-2xl">
+            <HistoryContext.Provider value={historyForSelectedCoffee}>
+            <Wheel
+              flavourBreadcrumb={flavourBreadcrumb}
+              setFlavourBreadcrumb={setFlavourBreadcrumb}
+              selections={selections}
+              setSelections={setSelections}
+            />
+            </HistoryContext.Provider>
+          </section>
+          <section className="flex-1">
+            <FullBreadcrumb selections={selections} />
+            {/* <TastingNotes
+              commentsInputValue={commentsInputValue}
+              setCommentsInputValue={setCommentsInputValue}
+            /> */}
+            <TastingHistory
+              history={historyForSelectedCoffee}
+              setSelections={setSelections}
+            />
+            {/* <button onClick={handleCancel}>Cancel</button>
+            <button onClick={handleSave}>Save</button> */}
+          </section>
+        </div>
       </div>
     </div>
   );
 }
-
-export default App;

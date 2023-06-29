@@ -33,7 +33,6 @@ const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelectio
 
   return (
     <>
-      <button onClick={() => console.log(selections)}>log select</button>
       <SelectionsContext.Provider value={{ selections }}>
         <svg
           className={styles.wheel}
