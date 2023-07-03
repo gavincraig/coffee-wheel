@@ -113,6 +113,10 @@ export default function App() {
             toggleCoffeeDropdown={toggleCoffeeDropdown}
           />
           <div className="flex gap-4 px-2">
+          <TastingNotes
+              commentsInputValue={commentsInputValue}
+              setCommentsInputValue={setCommentsInputValue}
+            />
           <button onClick={handleCancel}>Reset</button>
           <button onClick={handleSave}>Save</button>
           </div>
@@ -130,14 +134,10 @@ export default function App() {
           </section>
           <section className="flex-1">
             <FullBreadcrumb selections={selections} />
-            {/* <TastingNotes
-              commentsInputValue={commentsInputValue}
-              setCommentsInputValue={setCommentsInputValue}
-            /> */}
-            <TastingHistory
+            {/* <TastingHistory
               history={historyForSelectedCoffee}
               setSelections={setSelections}
-            />
+            /> */}
             {/* <button onClick={handleCancel}>Cancel</button>
             <button onClick={handleSave}>Save</button> */}
           </section>
