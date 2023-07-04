@@ -5,12 +5,11 @@ type TextFieldProps = {
 };
 
 const TextField = ({ placeholder, value, onChange }: TextFieldProps) => {
-
-    const handleChange = (e) => {
-        e.preventDefault();
-        console.log(e);
-        onChange(e.target.value);
-    }
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    console.log(e);
+    onChange(e.currentTarget.value);
+  };
 
   return (
     <input

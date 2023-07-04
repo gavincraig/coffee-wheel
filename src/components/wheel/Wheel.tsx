@@ -16,7 +16,7 @@ const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelectio
   const breadcrumbIds = flavourBreadcrumb?.map((breadcrumb) => breadcrumb.id);
 
   const handleDeselect = (flavourId: string) => {
-    setSelections((selections) =>
+    setSelections((selections: string[]) =>
         selections.filter((flavour) => flavour !== flavourId)
       );
   }
@@ -25,7 +25,7 @@ const Wheel = ({flavourBreadcrumb, setFlavourBreadcrumb, selections, setSelectio
     if (selections.includes(id)) {
       handleDeselect(id)
     } else {
-      setSelections((selections) => [id, ...selections]);
+      setSelections((selections: string[]) => [id, ...selections]);
     }
     const { breadcrumb } = computeSelectionBreadcrumb(id);
     setFlavourBreadcrumb(breadcrumb);

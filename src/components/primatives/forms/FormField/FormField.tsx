@@ -1,19 +1,19 @@
 import React from "react";
 
-type Props = {
+type FormFieldProps = {
   label: string;
   children: React.ReactNode;
   hideLabel?: boolean;
 };
 
-const FormField = ({ label, children, hideLabel }: Props) => {
+const FormField = ({ label, children, hideLabel }: FormFieldProps) => {
   return (
     <div>
       {hideLabel ? (
         children
       ) : (
-        <label className='flex flex-col '>
-          <span className='text-sm font-light text-gray-300'>{label}</span>
+        <label className="flex flex-col ">
+          <span className="text-sm font-light text-gray-300">{label}</span>
           {children}
         </label>
       )}

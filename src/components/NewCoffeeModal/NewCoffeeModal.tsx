@@ -1,74 +1,43 @@
 import React, { useState } from "react";
-import { Modal } from "../primatives/Modal";
-import FormField from "../primatives/forms/FormField/FormField";
-import { TextField } from "../primatives/forms/TextField";
-import AddDetailsContent from "./AddDetailsContent";
 import { Coffee } from "../../types";
+import { Modal } from "../primatives/Modal";
+import NewCoffeeForm from "./NewCoffeeForm/NewCoffeeForm";
+import { ConfirmCoffee } from "./ConfirmCoffee";
 
-type Props = {
+type NewCoffeeModalProps = {
   handleSaveNewCoffee: (newCoffee: Coffee) => void;
   open: boolean;
   toggleModal: () => void;
 };
 
-const NewCoffeeModal = ({ handleSaveNewCoffee, open, toggleModal }: Props) => {
+const NewCoffeeModal = ({
+  handleSaveNewCoffee,
+  open,
+  toggleModal,
+}: NewCoffeeModalProps) => {
   const [step, setStep] = useState(0);
-  const [coffeeNameInputValue, setCoffeeNameInputValue] = useState("");
+  const [nameInputValue, setNameInputValue] = useState("");
   const [originInputValue, setOriginInputValue] = useState("");
   const [processInputValue, setProcessInputValue] = useState("");
   const [varietalInputValue, setVarietalInputValue] = useState("");
+
+  const onSubmit = () => {
+    const newCoffee: Coffee = {
+      name: nameInputValue,
+      origin: originInputValue,
+      process: processInputValue,
+      varietal: varietalInputValue,
+    };
+    handleSaveNewCoffee(newCoffee);
+  };
 
   const handleNextStep = () => {
     setStep((step) => step + 1);
   };
 
-  const handleClearInputs = () => {
-    setCoffeeNameInputValue("");
-    setOriginInputValue("");
-    setProcessInputValue("");
-    setVarietalInputValue("");
-  };
-
-  const onSubmit = () => {
-    const newCoffee: Coffee = {
-      name: coffeeNameInputValue,
-      origin: originInputValue,
-      process: processInputValue,
-      varietal: varietalInputValue,
-    };
-
-    handleSaveNewCoffee(newCoffee);
-  };
-
   const handleClickSave = () => {
     onSubmit();
     handleNextStep();
-  };
-
-  const ConfirmDetailsButton = () => {
-    return <button onClick={handleClickSave}>Save</button>;
-  };
-
-  const addDetailsStep: StepDetails = {
-    title: "Add Coffee",
-    description: "Add a new coffe to your collection",
-    ctaButtons: <ConfirmDetailsButton />,
-    content: (
-      <AddDetailsContent
-        values={{
-          coffeeNameInputValue,
-          originInputValue,
-          processInputValue,
-          varietalInputValue,
-        }}
-        callbacks={{
-          setCoffeeNameInputValue,
-          setOriginInputValue,
-          setProcessInputValue,
-          setVarietalInputValue,
-        }}
-      />
-    ),
   };
 
   type StepDetails = {
@@ -78,14 +47,32 @@ const NewCoffeeModal = ({ handleSaveNewCoffee, open, toggleModal }: Props) => {
     ctaButtons?: React.ReactNode;
   };
 
-  const ConfirmDetailsContent = () => {
-    return <div className="animate-fade-in-slow">hooray!</div>;
+  const addDetailsStep: StepDetails = {
+    title: "Add Coffee",
+    description: "Add a new coffe to your collection",
+    ctaButtons: <button onClick={handleClickSave}>Save</button>,
+    content: (
+      <NewCoffeeForm
+        values={{
+          nameInputValue,
+          originInputValue,
+          processInputValue,
+          varietalInputValue,
+        }}
+        callbacks={{
+          setNameInputValue,
+          setOriginInputValue,
+          setProcessInputValue,
+          setVarietalInputValue,
+        }}
+      />
+    ),
   };
 
   const confirmedStep: StepDetails = {
     title: "Successfully added coffee",
-    description: `${coffeeNameInputValue} has been added to your collection`,
-    content: <ConfirmDetailsContent />,
+    description: `${nameInputValue} has been added to your collection`,
+    content: <ConfirmCoffee />,
   };
 
   const currentStepDetails = step === 0 ? addDetailsStep : confirmedStep;

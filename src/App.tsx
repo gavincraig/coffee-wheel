@@ -1,27 +1,20 @@
-import React, { useState } from "react";
-import "./App.css";
+import { useState } from "react";
 import { CoffeeDropdown } from "./components/CoffeeDropdown";
-import { Wheel } from "./components/Wheel";
-import { Coffee, TastingHistoryEntry, FlavourBreadcrumbEntry } from "./types";
-import { CoffeeDetails } from "./components/CoffeeDetails";
-import { TastingNotes } from "./components/TastingNotes";
-import { TastingHistory } from "./components/TastingHistory";
-import { MOCK_COFFEE } from "./constants";
 import FullBreadcrumb from "./components/FlavourBreadcrumb/FlavourBreadcrumb";
-import { Modal } from "./components/primatives/Modal";
 import { NewCoffeeModal } from "./components/NewCoffeeModal";
+import { TastingNotes } from "./components/TastingNotes";
+import { Wheel } from "./components/Wheel";
+import { MOCK_COFFEE } from "./constants";
 import { HistoryContext } from "./context/HistoryContext";
+import { Coffee, FlavourBreadcrumbEntry, TastingHistoryEntry } from "./types";
 
 export default function App() {
-  const [selectedCoffee, setSelectedCoffee] = useState<Coffee | never>();
-  const [isNewCoffee, setIsNewCoffee] = useState(false);
+  const [selectedCoffee, setSelectedCoffee] = useState<Coffee | never>(null);
   const [flavourBreadcrumb, setFlavourBreadcrumb] = useState<
     FlavourBreadcrumbEntry[] | []
   >([]);
   const [selections, setSelections] = useState<string[] | []>([]);
-
   const [commentsInputValue, setCommentsInputValue] = useState("");
-
   const [coffeeOptions, setCoffeeOptions] = useState<Coffee[] | []>(
     MOCK_COFFEE
   );
@@ -32,29 +25,17 @@ export default function App() {
   const [showNewCoffeeModal, setShowNewCoffeeModal] = useState(false);
   const [showCoffeeDropdown, setShowCoffeeDropdown] = useState(false);
 
-  const toggleNewCoffeeModal = () => {
-    console.log("called");
+  const toggleNewCoffeeModal = () =>
     setShowNewCoffeeModal((showNewCoffeeModal) => !showNewCoffeeModal);
-  };
 
   const toggleCoffeeDropdown = () =>
     setShowCoffeeDropdown((showCoffeeDropdown) => !showCoffeeDropdown);
 
   const handleSelectCoffee = (coffee: Coffee) => setSelectedCoffee(coffee);
 
-  const handleAddNewCoffee = () => {
-    setIsNewCoffee(true);
-    setSelectedCoffee({ name: "", origin: "", process: "", varietal: "" });
-  };
-
   const handleCancel = () => {
-    setIsNewCoffee(false);
     handleResetSelections();
-    handleResetSelectedCoffee();
-  };
-
-  const handleResetSelectedCoffee = () => {
-    setSelectedCoffee({ name: "", origin: "", process: "", varietal: "" });
+    setSelectedCoffee(null);
   };
 
   const handleResetSelections = () => {
@@ -103,33 +84,30 @@ export default function App() {
         <div className="flex justify-between p-2 sm:justify-start">
           <CoffeeDropdown
             open={showCoffeeDropdown}
-            toggleDropdown={toggleCoffeeDropdown}
             options={coffeeOptions}
             selectedCoffee={selectedCoffee}
-            handleSelectCoffee={handleSelectCoffee}
-            handleAddNewCoffee={handleAddNewCoffee}
-            handleSaveNewCoffee={handleSaveNewCoffee}
+            toggleOpen={toggleCoffeeDropdown}
             toggleNewCoffeeModal={toggleNewCoffeeModal}
-            toggleCoffeeDropdown={toggleCoffeeDropdown}
+            handleSelectCoffee={handleSelectCoffee}
           />
           <div className="flex gap-4 px-2">
-          <TastingNotes
+            <TastingNotes
               commentsInputValue={commentsInputValue}
               setCommentsInputValue={setCommentsInputValue}
             />
-          <button onClick={handleCancel}>Reset</button>
-          <button onClick={handleSave}>Save</button>
+            <button onClick={handleCancel}>Reset</button>
+            <button onClick={handleSave}>Save</button>
           </div>
         </div>
         <div className="flex w-full flex-col sm:flex-row">
           <section className="flex-1 mt-4 sm:max-w-2xl">
             <HistoryContext.Provider value={historyForSelectedCoffee}>
-            <Wheel
-              flavourBreadcrumb={flavourBreadcrumb}
-              setFlavourBreadcrumb={setFlavourBreadcrumb}
-              selections={selections}
-              setSelections={setSelections}
-            />
+              <Wheel
+                flavourBreadcrumb={flavourBreadcrumb}
+                setFlavourBreadcrumb={setFlavourBreadcrumb}
+                selections={selections}
+                setSelections={setSelections}
+              />
             </HistoryContext.Provider>
           </section>
           <section className="flex-1">
