@@ -1,6 +1,5 @@
-import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Pencil2Icon } from '@radix-ui/react-icons'
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
 type Props = {
   commentsInputValue;
@@ -8,21 +7,12 @@ type Props = {
 };
 
 const TastingNotes = ({ commentsInputValue, setCommentsInputValue }: Props) => {
-  // return (
-  //   <div className='flex flex-col'>
-  //       <h2>Tasting Notes</h2>
-  //       <input type="date" id="start" name="trip-start"
-  //      value="2023-06-25"></input>
-  //       <textarea placeholder='notes' value={commentsInputValue} onChange={(e) => setCommentsInputValue(e.target.value)}/>
-  //   </div>
-  // )
-
   return (
     <Dialog.Root modal>
       <Dialog.Trigger className="flex gap-2 items-center">
         <Pencil2Icon />
         Notes
-        </Dialog.Trigger>
+      </Dialog.Trigger>
       <Dialog.Overlay className="fixed bg-zinc-800 bg-opacity-60 backdrop-blur-sm w-screen h-screen top-0 left-0 grid place-items-center animate-fade-in">
         <Dialog.Content className="p-4 bg-zinc-900 rounded-lg shadow-lg m-4 w-full max-w-sm sm:max-w-md top-1/4 absolute">
           <Dialog.Title className="font-lg">Tasting Notes</Dialog.Title>
